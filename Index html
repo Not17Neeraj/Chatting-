@@ -1,1 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Chat App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 400px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        #messages {
+            list-style-type: none;
+            padding: 0;
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        #messages li {
+            padding: 8px;
+            margin-bottom: 5px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+
+        #chat-form {
+            display: flex;
+        }
+
+        #message-input {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        button {
+            width: 20%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <h1>Simple Chat</h1>
+        <ul id="messages"></ul>
+        <form id="chat-form">
+            <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off">
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <script>
+        // References to DOM elements
+        const form = document.getElementById('chat-form');
+        const input = document.getElementById('message-input');
+        const messagesList = document.getElementById('messages');
+
+        // Simulate a "message history" in the current session
+        let messageHistory = [];
+
+        // Function to render all messages
+        function renderMessages() {
+            // Clear the message list before adding the new messages
+            messagesList.innerHTML = '';
+            messageHistory.forEach((message) => {
+                const li = document.createElement('li');
+                li.textContent = message;
+                messagesList.appendChild(li);
+            });
+            messagesList.scrollTop = messagesList.scrollHeight; // Auto-scroll to the bottom
+        }
+
+        // Send a message when form is submitted
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const message = input.value.trim();
+            if (message) {
+                // Add the new message to the message history
+                messageHistory.push(message);
+                renderMessages(); // Re-render the message list
+                input.value = ''; // Clear the input field
+            }
+        });
+
+        // Initially render the messages (empty at start)
+        renderMessages();
+    </script>
+</body>
+</html>
